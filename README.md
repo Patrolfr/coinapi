@@ -11,6 +11,10 @@ Messages are available in form of Instrument list available at /api/instruments 
 - Generate gradle wrapper `gradle wrapper`
 #### a) Run app from sources
 - Run `./gradlew bootRun`
+#### b) Run app on Docker container
+- Build JAR `./gradlew clean build`
+- Build docker image `docker build -t fraczekgo/coinapi-app . `
+- Start container `docker run -p 8080:8080 fraczekgo/coinapi-app`
 
 Sample usage:
 `curl -GET http://localhost:8080/api/instruments`
@@ -23,32 +27,33 @@ Sample response:
 ```
 
 
-Exercise content:
- Napisać aplikację w języku java, która:
- 1. Podłączy się za pomocą interfejsu websocket do api giełdy coinbase pro
- 2. Będzie odbierać na bieżąco wiadomości z kanału ‘ticker’
- 3. Udostępni możliwość podglądu ostatnich otrzymanych wartości dla każdego instrumentu poprzez protokół HTTP w formacie JSON.
- Szczegółowy opis zadania:
- ● Proszę nie korzystać z dostępnych bibliotek implementujących dostęp do API coinbase pro
- ● Dokumentacje api giełdy coinbase pro można znaleźć tutaj: https://docs.pro.coinbase.com/?r=1#websocket-feed
- ● Należy zasubskrybować się na następujące instrumenty: BTCUSD,BTCEUR,ETHUSD,ETHEUR na kanale ‘ticker’.
- ● Odbierając wiadomości należy zapamiętać ostatnią wiadomość dla każdego instrumentu.
- ● Aplikacja udostępnia ostatnie wiadomości po HTTP w formacie JSON. Przykład wyniku:
+Exercise content:  
+ Napisać aplikację w języku java, która:  
+ 1. Podłączy się za pomocą interfejsu websocket do api giełdy coinbase pro  
+ 2. Będzie odbierać na bieżąco wiadomości z kanału ‘ticker’  
+ 3. Udostępni możliwość podglądu ostatnich otrzymanych wartości dla każdego instrumentu poprzez protokół HTTP w formacie JSON.  
+ Szczegółowy opis zadania:  
+ ● Proszę nie korzystać z dostępnych bibliotek implementujących dostęp do API coinbase pro  
+ ● Dokumentacje api giełdy coinbase pro można znaleźć tutaj: https://docs.pro.coinbase.com/?r=1#websocket-feed  
+ ● Należy zasubskrybować się na następujące instrumenty: BTCUSD,BTCEUR,ETHUSD,ETHEUR na kanale ‘ticker’.  
+ ● Odbierając wiadomości należy zapamiętać ostatnią wiadomość dla każdego instrumentu.  
+ ● Aplikacja udostępnia ostatnie wiadomości po HTTP w formacie JSON. Przykład wyniku:  
 ```
- [{"instrument":"BTCUSD", "bid": 9584.18, "ask":9584.19, “last”:9584.18, “time”:”12:32:02”},
- {"instrument":"BTCEUR", "bid": 8876.69, "ask": 8877.38, “last”:8877.38, “time”:”12:32:02”},
- {"instrument":"ETHUSD", "bid":211.33, "ask":211.38, “last”:211.33, “time”:”12:32:02”}, 
- {"instrument":"ETHEUR", "bid":195.01, "ask":195.15, “last”:195.15, “time”:”12:32:02”}]
+ [{"instrument":"BTCUSD", "bid": 9584.18, "ask":9584.19, “last”:9584.18, “time”:”12:32:02”},  
+ {"instrument":"BTCEUR", "bid": 8876.69, "ask": 8877.38, “last”:8877.38, “time”:”12:32:02”},  
+ {"instrument":"ETHUSD", "bid":211.33, "ask":211.38, “last”:211.33, “time”:”12:32:02”},   
+ {"instrument":"ETHEUR", "bid":195.01, "ask":195.15, “last”:195.15, “time”:”12:32:02”}]  
 ```
- ● Aplikacja wyświetla jedynie json - nie ma potrzeby tworzenia strony html.
- ● Mapowania pól między wiadomością z websocket api -> a wynikowym JSONem
- "product_id" -> “instrument”
- "best_bid" -> “bid”
- "best_ask" -> “ask”
- "price" -> “last”
- “time” -> “time” 
- Przykład:
- Wiadomość websocket:
+ ● Aplikacja wyświetla jedynie json - nie ma potrzeby tworzenia strony html.  
+ ● Mapowania pól między wiadomością z websocket api -> a wynikowym JSONem  
+ "product_id" -> “instrument”  
+ "best_bid" -> “bid”  
+ "best_ask" -> “ask”  
+ "price" -> “last”  
+ “time” -> “time”   
+ Przykład:  
+ Wiadomość websocket:  
+ ```
  {
  "type": "ticker",
  "sequence": 14165935228, "product_id": "BTC-USD",
@@ -64,5 +69,6 @@ Exercise content:
  "time": "2020-05-18T12:32:02.331872Z", "trade_id": 92323410,
  "last_size": "0.02252"
  }
- Wynikowy json:
- {"instrument": "BTCUSD", "bid": 9584.18, "ask": 9584.19, “last”: 9584.18, “time”:”12:32:02”}
+```
+ Wynikowy json:  
+ `{"instrument": "BTCUSD", "bid": 9584.18, "ask": 9584.19, “last”: 9584.18, “time”:”12:32:02”}`
