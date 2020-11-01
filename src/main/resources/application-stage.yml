@@ -1,0 +1,2 @@
+coinbase:
+  serverUrl: wss://ws-feed-public.sandbox.pro.coinbase.com/
