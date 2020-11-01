@@ -14,7 +14,7 @@ Messages are available in form of Instrument list available at /api/instruments 
 
 Sample usage:
 `curl -GET http://localhost:8080/api/instruments`
-Sample response:
+Sample response:  
 ```
 [{"instrument":"BTC-EUR","bid":11881.58,"ask":11881.6,"last":11881.6,"time":"18:10:39"},
 {"instrument":"BTC-USD","bid":13831.3,"ask":13831.32,"last":13831.32,"time":"18:10:44"},
